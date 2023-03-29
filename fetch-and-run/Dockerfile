@@ -1,16 +1,23 @@
 # """
 # Koopa fetch and run image.
 # @author Michael Steinbaugh
-# @note Updated 2023-03-20.
+# @note Updated 2023-03-29.
 # """
 
 FROM 812206152185.dkr.ecr.us-west-2.amazonaws.com/latch-base:9c8f-main
+ARG tag
+ENV FLYTE_INTERNAL_IMAGE $tag
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 USER root
-RUN python3 -m pip install 'latch==2.14.0' \
- && mkdir -pv '/opt/latch' \
- && apt-get update \
- && apt-get \
+RUN /usr/local/bin/python3 -m pip install \
+        -vvv \
+        --disable-pip-version-check \
+        --no-cache-dir \
+        --upgrade \
+        'latch' \
+ && /bin/mkdir -pv '/opt/latch' \
+ && /usr/bin/apt-get update \
+ && /usr/bin/apt-get \
         --no-install-recommends \
         --yes \
         install \
@@ -26,12 +33,11 @@ RUN python3 -m pip install 'latch==2.14.0' \
             'procps' \
             'sudo' \
             'unzip' \
- && curl -sSL 'https://koopa.acidgenomics.com/install' \
-    | bash -s -- --non-interactive --verbose \
- && koopa install conda \
- && koopa system info
+ && /usr/bin/apt-get clean \
+ && /bin/rm -fr '/var/lib/apt/lists/'* \
+ && /usr/bin/curl -sSL 'https://koopa.acidgenomics.com/install' \
+    | /bin/bash -s -- --non-interactive --verbose \
+ && /opt/koopa/bin/koopa system info
 COPY . /root/
-ARG tag
-ENV FLYTE_INTERNAL_IMAGE $tag
 WORKDIR /root
-CMD ["bash", "-il"]
+CMD ["/bin/bash", "-il"]
