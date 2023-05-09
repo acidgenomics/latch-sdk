@@ -1,9 +1,10 @@
 # commonly ignored files
-README.md
-CHANGELOG.md
-docker-compose.yml
-Dockerfile
-.latch
-.git
 **/__pycache__
+.git
+.latch
 .latch_report.tar.gz
+.logs
+CHANGELOG.md
+Dockerfile
+README.md
+docker-compose.yml
