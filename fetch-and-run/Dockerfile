@@ -1,10 +1,10 @@
 # """
 # Koopa fetch and run image.
 # @author Michael Steinbaugh
-# @note Updated 2023-03-29.
+# @note Updated 2023-06-27.
 # """
 
-FROM 812206152185.dkr.ecr.us-west-2.amazonaws.com/latch-base:9c8f-main
+FROM 812206152185.dkr.ecr.us-west-2.amazonaws.com/latch-base:5303-main
 ARG tag
 ENV FLYTE_INTERNAL_IMAGE $tag
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
